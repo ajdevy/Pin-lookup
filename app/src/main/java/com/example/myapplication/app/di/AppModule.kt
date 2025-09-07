@@ -2,8 +2,12 @@ package com.example.myapplication.app.di
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.app.data.PinterestApi
+import com.example.myapplication.pixabay.data.PixabayApi
 import com.example.myapplication.app.data.PinterestRepository
 import com.example.myapplication.app.data.PinterestRepositoryImpl
+import com.example.myapplication.pixabay.data.PixabayRepository
+import com.example.myapplication.pixabay.data.PixabayRepositoryImpl
+import com.example.myapplication.pixabay.domain.SearchPixabayImagesUseCase
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -47,4 +51,37 @@ val appModule = module {
     }
 
     single { PinterestRepositoryImpl(get()) } bind PinterestRepository::class
+
+    // Pixabay
+    single {
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BASIC
+        }
+        val apiKeyInterceptor = Interceptor { chain ->
+            val original = chain.request()
+            val originalUrl = original.url
+            val newUrl = originalUrl.newBuilder()
+                .addQueryParameter("key", BuildConfig.PIXABAY_API_KEY)
+                .build()
+            val request = original.newBuilder().url(newUrl).build()
+            chain.proceed(request)
+        }
+        OkHttpClient.Builder()
+            .addInterceptor(apiKeyInterceptor)
+            .addInterceptor(logging)
+            .build()
+    }
+
+    single {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.PIXABAY_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(get()))
+            .client(get())
+            .build()
+            .create(PixabayApi::class.java)
+    }
+
+    single { PixabayRepositoryImpl(get()) } bind PixabayRepository::class
+    
+    single { SearchPixabayImagesUseCase(get()) }
 }
