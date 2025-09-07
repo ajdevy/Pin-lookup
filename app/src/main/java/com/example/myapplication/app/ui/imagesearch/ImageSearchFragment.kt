@@ -45,7 +45,6 @@ class ImageSearchFragment : Fragment() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImageSearchScreen(viewModel: ImageSearchViewModel) {
-    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val pagingDataFlow by viewModel.pagingData.collectAsStateWithLifecycle()
     
     var searchText by remember { mutableStateOf("") }
@@ -81,7 +80,14 @@ fun ImageSearchScreen(viewModel: ImageSearchViewModel) {
             ) {
                 items(
                     count = lazyPagingItems.itemCount,
-                    key = { index -> lazyPagingItems[index]?.id ?: index }
+                    key = { index -> 
+                        val image = lazyPagingItems[index]
+                        if (image != null) {
+                            "${image.id}_${index}"
+                        } else {
+                            "placeholder_$index"
+                        }
+                    }
                 ) { index ->
                     val image = lazyPagingItems[index]
                     image?.let { 
