@@ -63,5 +63,5 @@ val appModule = module {
     single { PixabayDatabase.create(androidContext()) }
     
     // ViewModels
-    viewModel { ImageSearchViewModel(get()) }
+    viewModel { ImageSearchViewModel(get(), get()) }
 }

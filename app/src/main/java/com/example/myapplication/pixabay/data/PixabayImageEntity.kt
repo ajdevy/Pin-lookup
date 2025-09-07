@@ -12,7 +12,9 @@ data class PixabayImageEntity(
     val previewUrl: String?,
     val webformatUrl: String?,
     val largeImageUrl: String?,
-    val userName: String?
+    val userName: String?,
+    val searchQuery: String,
+    val page: Int
 ) {
     fun toDomain(): PixabayImage {
         return PixabayImage(
@@ -26,13 +28,15 @@ data class PixabayImageEntity(
     }
 }
 
-fun PixabayImage.toEntity(): PixabayImageEntity {
+fun PixabayImage.toEntity(searchQuery: String, page: Int): PixabayImageEntity {
     return PixabayImageEntity(
         id = id,
         tags = tags.joinToString(","),
         previewUrl = previewUrl,
         webformatUrl = webformatUrl,
         largeImageUrl = largeImageUrl,
-        userName = userName
+        userName = userName,
+        searchQuery = searchQuery,
+        page = page
     )
 }

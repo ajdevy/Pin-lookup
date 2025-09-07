@@ -20,7 +20,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.myapplication.app.ui.theme.MyApplicationTheme
-import com.example.myapplication.pixabay.domain.PixabayImage
+import com.example.myapplication.pixabay.data.PixabayImageEntity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ImageSearchFragment : Fragment() {
@@ -122,7 +122,8 @@ fun ImageSearchScreen(viewModel: ImageSearchViewModel) {
 }
 
 @Composable
-fun ImageItem(image: PixabayImage) {
+// TODO: remove entity from fragment, use domain class
+fun ImageItem(image: PixabayImageEntity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -139,7 +140,7 @@ fun ImageItem(image: PixabayImage) {
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "Tags: ${image.tags.joinToString(", ")}",
+                text = "Tags: ${image.tags}",
                 style = MaterialTheme.typography.bodySmall
             )
         }

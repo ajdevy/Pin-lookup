@@ -6,12 +6,13 @@ import androidx.room.RoomDatabase
 import android.content.Context
 
 @Database(
-    entities = [PixabayImageEntity::class],
-    version = 1,
+    entities = [PixabayImageEntity::class, PixabayRemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 abstract class PixabayDatabase : RoomDatabase() {
     abstract fun pixabayImageDao(): PixabayImageDao
+    abstract fun pixabayRemoteKeysDao(): PixabayRemoteKeysDao
 
     companion object {
         fun create(context: Context): PixabayDatabase {
