@@ -23,17 +23,12 @@ class ImageSearchViewModel(
     private val database: PixabayDatabase
 ) : ViewModel() {
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-
     private val _pagingData = MutableStateFlow<Flow<PagingData<PixabayImageEntity>>?>(null)
     // TODO: remove ? nullability
     val pagingData: StateFlow<Flow<PagingData<PixabayImageEntity>>?> = _pagingData.asStateFlow()
 
     fun searchImages(query: String) {
         if (query.isBlank()) return
-        
-        _searchQuery.value = query
         
         val pager = Pager(
             config = PagingConfig(
