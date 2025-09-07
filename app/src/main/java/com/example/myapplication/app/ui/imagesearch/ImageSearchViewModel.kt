@@ -6,10 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
-import com.example.myapplication.pixabay.data.PixabayDatabase
-import com.example.myapplication.pixabay.data.PixabayRemoteMediator
-import com.example.myapplication.pixabay.data.toDomain
+import com.example.myapplication.pixabay.data.PixabayPagingSource
 import com.example.myapplication.pixabay.domain.PixabayImage
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
 import kotlinx.coroutines.flow.Flow
@@ -18,8 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class ImageSearchViewModel(
-    private val searchUseCase: SearchImagesUseCase,
-    private val database: PixabayDatabase
+    private val searchUseCase: SearchImagesUseCase
 ) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
@@ -38,18 +34,11 @@ class ImageSearchViewModel(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            remoteMediator = PixabayRemoteMediator(
-                searchUseCase = searchUseCase,
-                query = query,
-                database = database
-            ),
-            pagingSourceFactory = { database.pixabayImageDao().pagingSource() }
+            pagingSourceFactory = { 
+                PixabayPagingSource(searchUseCase, query)
+            }
         )
         
-        _pagingData.value = pager.flow
-            .cachedIn(viewModelScope)
-            .map { pagingData ->
-                pagingData.map { entity -> entity.toDomain() }
-            }
+        _pagingData.value = pager.flow.cachedIn(viewModelScope)
     }
 }

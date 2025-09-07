@@ -8,11 +8,12 @@ class Navigator private constructor(private val fragment: Fragment) {
 
     fun decideStartDestination() {
         val isLoggedIn = false // replace with real session check
-        if (isLoggedIn) {
+        //TODO: uncomment
+//        if (isLoggedIn) {
             goToImageSearch(clearBackStack = true)
-        } else {
-            goToLogin(clearBackStack = true)
-        }
+//        } else {
+//            goToLogin(clearBackStack = true)
+//        }
     }
 
     fun goToLogin(clearBackStack: Boolean = false) {

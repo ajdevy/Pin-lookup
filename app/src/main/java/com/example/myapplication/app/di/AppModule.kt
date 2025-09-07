@@ -11,7 +11,9 @@ import com.example.myapplication.pixabay.domain.SearchImagesUseCase
 import com.example.myapplication.app.ui.imagesearch.ImageSearchViewModel
 import com.example.myapplication.pixabay.data.PixabayDatabase
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.viewModel
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,7 +24,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val appModule = module {
     single {
-        Moshi.Builder().build()
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
     }
 
     single {
@@ -92,5 +96,5 @@ val appModule = module {
     single { PixabayDatabase.create(androidContext()) }
     
     // ViewModels
-    single { ImageSearchViewModel(get(), get()) }
+    viewModel { ImageSearchViewModel(get()) }
 }

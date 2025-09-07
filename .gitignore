@@ -1,5 +1,6 @@
 *.iml
 .vscode/
+.kotlin/
 .idea/
 .gradle
 /app/build/
