@@ -1,10 +1,7 @@
 package com.example.myapplication.app.di
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.app.data.PinterestApi
 import com.example.myapplication.pixabay.data.PixabayApi
-import com.example.myapplication.app.data.PinterestRepository
-import com.example.myapplication.app.data.PinterestRepositoryImpl
 import com.example.myapplication.pixabay.data.PixabayRepository
 import com.example.myapplication.pixabay.data.PixabayRepositoryImpl
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
@@ -28,36 +25,6 @@ val appModule = module {
             .add(KotlinJsonAdapterFactory())
             .build()
     }
-
-    single {
-        val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
-        }
-        val authInterceptor = Interceptor { chain ->
-            val token = BuildConfig.PINTEREST_ACCESS_TOKEN
-            val request = chain.request().newBuilder().apply {
-                if (token.isNotEmpty()) {
-                    header("Authorization", "Bearer $token")
-                }
-            }.build()
-            chain.proceed(request)
-        }
-        OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
-            .addInterceptor(logging)
-            .build()
-    }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.PINTEREST_BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(get()))
-            .client(get())
-            .build()
-            .create(PinterestApi::class.java)
-    }
-
-    single { PinterestRepositoryImpl(get()) } bind PinterestRepository::class
 
     // Pixabay
     single {

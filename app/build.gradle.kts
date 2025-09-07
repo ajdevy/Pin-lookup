@@ -18,8 +18,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "PINTEREST_BASE_URL", "\"https://api.pinterest.com/v5/\"")
-        buildConfigField("String", "PINTEREST_ACCESS_TOKEN", "\"TODO\"")
         buildConfigField("String", "PIXABAY_BASE_URL", "\"https://pixabay.com/\"")
         buildConfigField("String", "PIXABAY_API_KEY", "\"52172770-02e9fa286b610e88b1cbc92ed\"")
     }
