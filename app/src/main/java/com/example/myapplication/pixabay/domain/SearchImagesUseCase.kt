@@ -2,7 +2,7 @@ package com.example.myapplication.pixabay.domain
 
 import com.example.myapplication.pixabay.data.PixabayRepository
 
-class SearchPixabayImagesUseCase(
+class SearchImagesUseCase(
     private val repository: PixabayRepository
 ) {
     suspend operator fun invoke(query: String, page: Int, perPage: Int = 25): PixabaySearchPage {

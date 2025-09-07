@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
             val password = binding.passwordEdit.text?.toString().orEmpty()
             // TODO: hook in real auth
             if (username.isNotBlank() && password.isNotBlank()) {
-                Navigator.from(this).goToPins()
+                Navigator.from(this).goToImageSearch()
             }
         }
     }

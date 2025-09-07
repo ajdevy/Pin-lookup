@@ -7,7 +7,10 @@ import com.example.myapplication.app.data.PinterestRepository
 import com.example.myapplication.app.data.PinterestRepositoryImpl
 import com.example.myapplication.pixabay.data.PixabayRepository
 import com.example.myapplication.pixabay.data.PixabayRepositoryImpl
-import com.example.myapplication.pixabay.domain.SearchPixabayImagesUseCase
+import com.example.myapplication.pixabay.domain.SearchImagesUseCase
+import com.example.myapplication.app.ui.imagesearch.ImageSearchViewModel
+import com.example.myapplication.pixabay.data.PixabayDatabase
+import org.koin.android.ext.koin.androidContext
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -83,5 +86,11 @@ val appModule = module {
 
     single { PixabayRepositoryImpl(get()) } bind PixabayRepository::class
     
-    single { SearchPixabayImagesUseCase(get()) }
+    single { SearchImagesUseCase(get()) }
+    
+    // Database
+    single { PixabayDatabase.create(androidContext()) }
+    
+    // ViewModels
+    single { ImageSearchViewModel(get(), get()) }
 }

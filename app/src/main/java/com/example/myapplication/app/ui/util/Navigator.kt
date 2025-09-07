@@ -9,7 +9,7 @@ class Navigator private constructor(private val fragment: Fragment) {
     fun decideStartDestination() {
         val isLoggedIn = false // replace with real session check
         if (isLoggedIn) {
-            goToPins(clearBackStack = true)
+            goToImageSearch(clearBackStack = true)
         } else {
             goToLogin(clearBackStack = true)
         }
@@ -23,12 +23,12 @@ class Navigator private constructor(private val fragment: Fragment) {
         }
     }
 
-    fun goToPins(clearBackStack: Boolean = false) {
+    fun goToImageSearch(clearBackStack: Boolean = false) {
         val navController = fragment.findNavController()
         val current = navController.currentDestination?.id
         when (current) {
-            R.id.splashScreenFragment -> navController.navigate(R.id.action_splash_to_pins)
-            R.id.loginFragment -> navController.navigate(R.id.action_login_to_pins)
+            R.id.splashScreenFragment -> navController.navigate(R.id.action_splash_to_image_search)
+            R.id.loginFragment -> navController.navigate(R.id.action_login_to_image_search)
         }
     }
 

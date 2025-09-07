@@ -1,15 +1,15 @@
-package com.example.myapplication.app.ui.pins
+package com.example.myapplication.app.ui.imagesearch
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapplication.databinding.FragmentPinsBinding
+import com.example.myapplication.databinding.FragmentImageSearchBinding
 
-class PinsFragment : Fragment() {
+class ImageSearchFragment : Fragment() {
 
-    private var _binding: FragmentPinsBinding? = null
+    private var _binding: FragmentImageSearchBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class PinsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPinsBinding.inflate(inflater, container, false)
+        _binding = FragmentImageSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -26,5 +26,3 @@ class PinsFragment : Fragment() {
         _binding = null
     }
 }
-
-
