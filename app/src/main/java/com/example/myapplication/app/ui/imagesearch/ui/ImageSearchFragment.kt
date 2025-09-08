@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentImageSearchBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -18,7 +19,9 @@ class ImageSearchFragment : Fragment() {
     private var _binding: FragmentImageSearchBinding? = null
     private val binding get() = _binding!!
     
-    private lateinit var adapter: PixabayImageAdapter
+    private lateinit var imageAdapter: PixabayImageAdapter
+    private lateinit var footerAdapter: LoadingFooterAdapter
+    private lateinit var concatAdapter: ConcatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,26 +41,19 @@ class ImageSearchFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PixabayImageAdapter()
-        binding.rvImages.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvImages.adapter = adapter
+        imageAdapter = PixabayImageAdapter()
+        footerAdapter = LoadingFooterAdapter {
+            // Retry loading more items
+            imageAdapter.retry()
+        }
+        concatAdapter = ConcatAdapter(imageAdapter, footerAdapter)
         
-        // Add load state listener
-        adapter.addLoadStateListener { loadState ->
-            when (loadState.append) {
-                is LoadState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.tvError.visibility = View.GONE
-                }
-                is LoadState.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.tvError.visibility = View.VISIBLE
-                }
-                else -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.tvError.visibility = View.GONE
-                }
-            }
+        binding.rvImages.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvImages.adapter = concatAdapter
+        
+        // Add load state listener to update footer
+        imageAdapter.addLoadStateListener { loadState ->
+            footerAdapter.updateLoadState(loadState.append)
         }
     }
 
@@ -73,7 +69,7 @@ class ImageSearchFragment : Fragment() {
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.pagingData.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+                imageAdapter.submitData(pagingData)
             }
         }
     }
