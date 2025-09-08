@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/imageSearchFragment"
-        android:name="com.example.myapplication.app.ui.imagesearch.ImageSearchFragment"
+        android:name="com.example.myapplication.app.ui.imagesearch.ui.ImageSearchFragment"
         android:label="Image Search" />
 
 </navigation>
