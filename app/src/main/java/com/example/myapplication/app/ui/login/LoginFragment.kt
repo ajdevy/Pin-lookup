@@ -24,9 +24,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loginButton.setOnClickListener {
-            val username = binding.usernameEdit.text?.toString().orEmpty()
-            val password = binding.passwordEdit.text?.toString().orEmpty()
+        binding.performLoginButton.setOnClickListener {
+            val username = binding.enterUsernameEditText.text?.toString().orEmpty()
+            val password = binding.enterPasswordEditText.text?.toString().orEmpty()
             // TODO: hook in real auth
             if (username.isNotBlank() && password.isNotBlank()) {
                 Navigator.from(this).goToImageSearch()

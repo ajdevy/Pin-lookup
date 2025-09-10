@@ -13,7 +13,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/ivImage"
+            android:id="@+id/displayImageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="8dp"
@@ -22,7 +22,7 @@
             android:contentDescription="Pixabay Image" />
 
         <TextView
-            android:id="@+id/tvImageId"
+            android:id="@+id/displayImageIdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID: 123456"
@@ -30,7 +30,7 @@
             android:textColor="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/tvUserName"
+            android:id="@+id/displayUserNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -38,7 +38,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvTags"
+            android:id="@+id/displayTagsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

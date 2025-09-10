@@ -12,9 +12,9 @@ class LoadingFooterViewHolder(
     private val onRetryClick: () -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
     
-    private val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
-    private val errorText: TextView = itemView.findViewById(R.id.tvError)
-    private val retryButton: MaterialButton = itemView.findViewById(R.id.btnRetry)
+    private val progressBar: ProgressBar = itemView.findViewById(R.id.displayLoadingProgressBar)
+    private val errorText: TextView = itemView.findViewById(R.id.displayErrorMessageTextView)
+    private val retryButton: MaterialButton = itemView.findViewById(R.id.performRetryButton)
     
     init {
         retryButton.setOnClickListener {

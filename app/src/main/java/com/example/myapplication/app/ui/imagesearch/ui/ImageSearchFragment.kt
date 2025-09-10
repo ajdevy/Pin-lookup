@@ -48,8 +48,8 @@ class ImageSearchFragment : Fragment() {
         }
         concatAdapter = ConcatAdapter(imageAdapter, footerAdapter)
         
-        binding.rvImages.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvImages.adapter = concatAdapter
+        binding.displayImagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.displayImagesRecyclerView.adapter = concatAdapter
         
         // Add load state listener to update footer
         imageAdapter.addLoadStateListener { loadState ->
@@ -58,8 +58,8 @@ class ImageSearchFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.btnSearch.setOnClickListener {
-            val query = binding.etSearch.text?.toString() ?: ""
+        binding.performSearchButton.setOnClickListener {
+            val query = binding.enterSearchQueryEditText.text?.toString() ?: ""
             if (query.isNotBlank()) {
                 viewModel.searchImages(query)
             }

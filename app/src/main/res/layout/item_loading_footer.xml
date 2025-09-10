@@ -7,13 +7,13 @@
     android:padding="16dp">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/displayLoadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tvError"
+        android:id="@+id/displayErrorMessageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Error loading more items"
@@ -21,7 +21,7 @@
         android:visibility="gone" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRetry"
+        android:id="@+id/performRetryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

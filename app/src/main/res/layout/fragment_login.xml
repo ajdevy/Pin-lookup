@@ -7,13 +7,13 @@
     android:padding="24dp">
 
     <EditText
-        android:id="@+id/usernameEdit"
+        android:id="@+id/enterUsernameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username" />
 
     <EditText
-        android:id="@+id/passwordEdit"
+        android:id="@+id/enterPasswordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
@@ -21,7 +21,7 @@
         android:layout_marginTop="12dp" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/performLoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
