@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import timber.log.Timber
 
 @OptIn(ExperimentalPagingApi::class)
 class ImageSearchViewModel(
@@ -31,9 +32,12 @@ class ImageSearchViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val pagingData: Flow<PagingData<PixabayImageEntity>> = _searchQuery
         .flatMapLatest { query ->
+            Timber.d("Search query changed: '$query'")
             if (query.isBlank()) {
+                Timber.d("Empty query, returning empty paging data")
                 flowOf(PagingData.empty())
             } else {
+                Timber.d("Creating pager for query: '$query'")
                 val pager = Pager(
                     config = PagingConfig(
                         pageSize = 20,
@@ -45,6 +49,7 @@ class ImageSearchViewModel(
                         query = query
                     ),
                     pagingSourceFactory = { 
+                        Timber.d("Creating paging source for query: '$query'")
                         database.pixabayImageDao().pagingSource(query)
                     }
                 )
@@ -53,6 +58,7 @@ class ImageSearchViewModel(
         }
 
     fun searchImages(query: String) {
+        Timber.d("searchImages called with query: '$query'")
         _searchQuery.value = query
     }
 }

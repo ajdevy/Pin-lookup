@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import timber.log.Timber
 
-class LoadingFooterAdapter(
+class LoadingHeaderAdapter(
     private val onRetryClick: () -> Unit
-) : RecyclerView.Adapter<LoadingFooterViewHolder>() {
+) : RecyclerView.Adapter<LoadingHeaderViewHolder>() {
     
     private var loadState: LoadState = LoadState.NotLoading(false)
     
@@ -17,28 +17,28 @@ class LoadingFooterAdapter(
         val oldLoadState = loadState
         loadState = newLoadState
         
-        Timber.d("LoadingFooterAdapter load state changed from $oldLoadState to $newLoadState")
+        Timber.d("LoadingHeaderAdapter load state changed from $oldLoadState to $newLoadState")
         
         if (oldLoadState != newLoadState) {
             notifyDataSetChanged()
         }
     }
     
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadingFooterViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadingHeaderViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_loading_footer, parent, false)
-        return LoadingFooterViewHolder(view, onRetryClick)
+            .inflate(R.layout.item_loading_header, parent, false)
+        return LoadingHeaderViewHolder(view, onRetryClick)
     }
     
-    override fun onBindViewHolder(holder: LoadingFooterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LoadingHeaderViewHolder, position: Int) {
         holder.bind(loadState)
     }
     
     override fun getItemCount(): Int {
-        return if (shouldShowFooter()) 1 else 0
+        return if (shouldShowHeader()) 1 else 0
     }
     
-    private fun shouldShowFooter(): Boolean {
+    private fun shouldShowHeader(): Boolean {
         return loadState is LoadState.Loading || loadState is LoadState.Error
     }
 }

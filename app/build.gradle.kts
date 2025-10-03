@@ -74,6 +74,9 @@ dependencies {
     
     // Image Loading
     implementation("io.coil-kt:coil:2.6.0")
+    
+    // Logging
+    implementation(libs.timber)
 
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.8.0")

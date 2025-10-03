@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
+import timber.log.Timber
 
 //TODO: inject it with @ActivityContext
 @OptIn(ExperimentalPagingApi::class)
@@ -19,6 +20,7 @@ class PixabayRemoteMediator(
     private val remoteKeysDao = database.pixabayRemoteKeysDao()
 
     override suspend fun initialize(): InitializeAction {
+        Timber.d("PixabayRemoteMediator initialized for query: $query")
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
@@ -26,35 +28,45 @@ class PixabayRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, PixabayImageEntity>
     ): MediatorResult {
+        Timber.d("Loading data for query: $query, loadType: $loadType")
         return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                    remoteKeys?.nextKey?.minus(1) ?: 1
+                    val pageNum = remoteKeys?.nextKey?.minus(1) ?: 1
+                    Timber.d("REFRESH: Loading page $pageNum")
+                    pageNum
                 }
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
                     val prevKey = remoteKeys?.prevKey
                     if (prevKey == null) {
+                        Timber.d("PREPEND: No more pages to load, end of pagination reached")
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }
+                    Timber.d("PREPEND: Loading page $prevKey")
                     prevKey
                 }
                 LoadType.APPEND -> {
                     val remoteKeys = getRemoteKeyForLastItem(state)
                     val nextKey = remoteKeys?.nextKey
                     if (nextKey == null) {
+                        Timber.d("APPEND: No more pages to load, end of pagination reached")
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }
+                    Timber.d("APPEND: Loading page $nextKey")
                     nextKey
                 }
             }
 
+            Timber.d("Fetching images from API for query: $query, page: $page")
             val result = searchUseCase(query = query, page = page, perPage = 20)
             val images = result.images.map { it.toEntity(query, page) }
+            Timber.d("Successfully fetched ${images.size} images from API")
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
+                    Timber.d("Clearing existing data for query: $query")
                     imageDao.clearByQuery(query)
                     remoteKeysDao.clearRemoteKeysByQuery(query)
                 }
@@ -69,11 +81,14 @@ class PixabayRemoteMediator(
                         )
                     )
                 )
+                Timber.d("Successfully saved ${images.size} images to database")
             }
 
-            MediatorResult.Success(endOfPaginationReached = result.images.isEmpty())
+            val endOfPagination = result.images.isEmpty()
+            Timber.d("Load completed successfully. End of pagination: $endOfPagination")
+            MediatorResult.Success(endOfPaginationReached = endOfPagination)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Timber.e(e, "Error loading data for query: $query, loadType: $loadType")
             MediatorResult.Error(e)
         }
     }
