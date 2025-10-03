@@ -1,12 +1,12 @@
-package com.example.myapplication.app.ui.login
+package com.example.myapplication.login.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.app.ui.util.Navigator
+import com.example.myapplication.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
             val password = binding.enterPasswordEditText.text?.toString().orEmpty()
             // TODO: hook in real auth
             if (username.isNotBlank() && password.isNotBlank()) {
-                Navigator.from(this).goToImageSearch()
+                Navigator.Companion.from(this).goToImageSearch()
             }
         }
     }
@@ -39,5 +39,3 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 }
-
-

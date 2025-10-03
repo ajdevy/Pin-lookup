@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.myapplication.app.ui.login.LoginFragment"
+        android:name="com.example.myapplication.login.ui.LoginFragment"
         android:label="Login">
         <action
             android:id="@+id/action_login_to_image_search"
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/imageSearchFragment"
-        android:name="com.example.myapplication.app.ui.imagesearch.ui.ImageSearchFragment"
+        android:name="com.example.myapplication.imagesearch.ui.ImageSearchFragment"
         android:label="Image Search" />
 
 </navigation>

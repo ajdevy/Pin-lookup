@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.app
 
 import android.app.Application
 import com.example.myapplication.app.di.appModule
@@ -8,7 +8,7 @@ import org.koin.core.context.startKoin
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        
+
         startKoin {
             androidContext(this@MyApplication)
             modules(appModule)

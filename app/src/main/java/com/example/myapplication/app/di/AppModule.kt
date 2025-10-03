@@ -5,7 +5,7 @@ import com.example.myapplication.pixabay.data.PixabayApi
 import com.example.myapplication.pixabay.data.PixabayRepository
 import com.example.myapplication.pixabay.data.PixabayRepositoryImpl
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
-import com.example.myapplication.app.ui.imagesearch.ui.ImageSearchViewModel
+import com.example.myapplication.imagesearch.ui.ImageSearchViewModel
 import com.example.myapplication.pixabay.data.PixabayDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel

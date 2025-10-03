@@ -1,11 +1,10 @@
-package com.example.myapplication.app.ui.imagesearch.ui
+package com.example.myapplication.imagesearch.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.pixabay.data.PixabayImageEntity
 

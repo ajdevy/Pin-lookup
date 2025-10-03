@@ -1,4 +1,4 @@
-package com.example.myapplication.app.ui.imagesearch.ui
+package com.example.myapplication.imagesearch.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.FragmentImageSearchBinding
@@ -20,6 +19,7 @@ class ImageSearchFragment : Fragment() {
     private val binding get() = _binding!!
     
     private lateinit var imageAdapter: PixabayImageAdapter
+    private lateinit var headerAdapter: LoadingHeaderAdapter
     private lateinit var footerAdapter: LoadingFooterAdapter
     private lateinit var concatAdapter: ConcatAdapter
 
@@ -42,17 +42,25 @@ class ImageSearchFragment : Fragment() {
 
     private fun setupRecyclerView() {
         imageAdapter = PixabayImageAdapter()
+        headerAdapter = LoadingHeaderAdapter {
+            // Retry initial load
+            imageAdapter.retry()
+        }
         footerAdapter = LoadingFooterAdapter {
             // Retry loading more items
             imageAdapter.retry()
         }
-        concatAdapter = ConcatAdapter(imageAdapter, footerAdapter)
+        concatAdapter = ConcatAdapter(headerAdapter, imageAdapter, footerAdapter)
         
         binding.displayImagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.displayImagesRecyclerView.adapter = concatAdapter
         
-        // Add load state listener to update footer
+        // Add load state listener to update header and footer loading states
         imageAdapter.addLoadStateListener { loadState ->
+            // Update header for refresh states (initial load)
+            headerAdapter.updateLoadState(loadState.refresh)
+            
+            // Update footer for append states (loading more)
             footerAdapter.updateLoadState(loadState.append)
         }
     }

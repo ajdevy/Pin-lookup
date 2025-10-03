@@ -1,5 +1,7 @@
 package com.example.myapplication.pixabay.data
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonQualifier
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -40,7 +42,8 @@ data class PixabayHitDto(
     val collections: Int?,
     val likes: Int?,
     val comments: Int?,
-    val user_id: Int?,
+    @Json(name = "user_id")
+    val userId: Int?,
     val user: String?,
     val userImageURL: String?
 )

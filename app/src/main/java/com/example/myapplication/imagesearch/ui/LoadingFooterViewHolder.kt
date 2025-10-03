@@ -1,8 +1,9 @@
-package com.example.myapplication.app.ui.imagesearch.ui
+package com.example.myapplication.imagesearch.ui
 
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.google.android.material.button.MaterialButton
@@ -22,14 +23,14 @@ class LoadingFooterViewHolder(
         }
     }
     
-    fun bind(loadState: androidx.paging.LoadState) {
+    fun bind(loadState: LoadState) {
         when (loadState) {
-            is androidx.paging.LoadState.Loading -> {
+            is LoadState.Loading -> {
                 progressBar.visibility = View.VISIBLE
                 errorText.visibility = View.GONE
                 retryButton.visibility = View.GONE
             }
-            is androidx.paging.LoadState.Error -> {
+            is LoadState.Error -> {
                 progressBar.visibility = View.GONE
                 errorText.visibility = View.VISIBLE
                 retryButton.visibility = View.VISIBLE

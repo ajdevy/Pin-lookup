@@ -8,11 +8,11 @@ class PixabayRepositoryImpl(
 ) : PixabayRepository {
 
     override suspend fun search(query: String, page: Int, perPage: Int): PixabaySearchPage {
-        val dto = api.searchImages(query = query, page = page, perPage = perPage)
+        val response = api.searchImages(query = query, page = page, perPage = perPage)
         return PixabaySearchPage(
-            total = dto.total,
-            totalHits = dto.totalHits,
-            images = dto.hits.map { hit ->
+            total = response.total,
+            totalHits = response.totalHits,
+            images = response.hits.map { hit ->
                 PixabayImage(
                     id = hit.id,
                     tags = (hit.tags ?: "").split(',').map { it.trim() }.filter { it.isNotEmpty() },
@@ -21,9 +21,7 @@ class PixabayRepositoryImpl(
                     largeImageUrl = hit.largeImageURL,
                     userName = hit.user
                 )
-            },
-            page = page,
-            perPage = perPage
+            }
         )
     }
 }
