@@ -1,5 +1,6 @@
 package com.example.myapplication.imagesearch.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
@@ -8,12 +9,35 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.myapplication.R
 import com.example.myapplication.pixabay.data.PixabayImageEntity
 
-class PixabayImageAdapter : PagingDataAdapter<PixabayImageEntity, PixabayImageViewHolder>(
-    DIFF_CALLBACK
-) {
-    
+class PixabayImageAdapter(val itemClickListener: ItemClickListener) :
+    PagingDataAdapter<PixabayImageEntity, PixabayImageViewHolder>(
+        DIFF_CALLBACK
+    ) {
+
     private var loadState: LoadState = LoadState.NotLoading(false)
-    
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateLoadState(newLoadState: LoadState) {
+        val oldLoadState = loadState
+        loadState = newLoadState
+
+        // Notify if the load state changed
+        if (oldLoadState != newLoadState) {
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PixabayImageViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_pixabay_image, parent, false)
+        return PixabayImageViewHolder(view, itemClickListener)
+    }
+
+    override fun onBindViewHolder(holder: PixabayImageViewHolder, position: Int) {
+        val image = getItem(position)
+        image?.let { holder.bind(it) }
+    }
+
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PixabayImageEntity>() {
             override fun areItemsTheSame(
@@ -22,7 +46,7 @@ class PixabayImageAdapter : PagingDataAdapter<PixabayImageEntity, PixabayImageVi
             ): Boolean {
                 return oldItem.id == newItem.id
             }
-            
+
             override fun areContentsTheSame(
                 oldItem: PixabayImageEntity,
                 newItem: PixabayImageEntity
@@ -31,25 +55,8 @@ class PixabayImageAdapter : PagingDataAdapter<PixabayImageEntity, PixabayImageVi
             }
         }
     }
-    
-    fun updateLoadState(newLoadState: LoadState) {
-        val oldLoadState = loadState
-        loadState = newLoadState
-        
-        // Notify if the load state changed
-        if (oldLoadState != newLoadState) {
-            notifyDataSetChanged()
-        }
-    }
-    
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PixabayImageViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_pixabay_image, parent, false)
-        return PixabayImageViewHolder(view)
-    }
-    
-    override fun onBindViewHolder(holder: PixabayImageViewHolder, position: Int) {
-        val image = getItem(position)
-        image?.let { holder.bind(it) }
-    }
+}
+
+public interface ItemClickListener {
+    fun onItemClicked(item: PixabayImageEntity)
 }

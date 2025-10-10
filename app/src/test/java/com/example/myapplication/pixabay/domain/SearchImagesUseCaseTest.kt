@@ -1,6 +1,6 @@
 package com.example.myapplication.pixabay.domain
 
-import com.example.myapplication.pixabay.data.PixabayRepository
+import com.example.myapplication.pixabay.data.PixabaySearchRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -10,7 +10,7 @@ import org.junit.Test
 
 class SearchImagesUseCaseTest {
 
-    private lateinit var repository: PixabayRepository
+    private lateinit var repository: PixabaySearchRepository
     private lateinit var useCase: SearchImagesUseCase
 
     @Before

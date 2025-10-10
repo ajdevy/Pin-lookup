@@ -1,9 +1,11 @@
 package com.example.myapplication.app.di
 
+import com.arkivanov.decompose.ComponentContext
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.app.ui.navigation.DefaultNavigationComponent
 import com.example.myapplication.pixabay.data.PixabayApi
-import com.example.myapplication.pixabay.data.PixabayRepository
-import com.example.myapplication.pixabay.data.PixabayRepositoryImpl
+import com.example.myapplication.pixabay.data.PixabaySearchRepository
+import com.example.myapplication.pixabay.data.PixabaySearchRepositoryImpl
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
 import com.example.myapplication.imagesearch.ui.ImageSearchViewModel
 import com.example.myapplication.pixabay.data.PixabayDatabase
@@ -20,6 +22,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val appModule = module {
+
+    // navigation
+    factory { (componentContext: ComponentContext) ->
+        DefaultNavigationComponent(componentContext)
+    }
+
     single {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -55,7 +63,7 @@ val appModule = module {
             .create(PixabayApi::class.java)
     }
 
-    single { PixabayRepositoryImpl(get()) } bind PixabayRepository::class
+    single { PixabaySearchRepositoryImpl(get()) } bind PixabaySearchRepository::class
     
     single { SearchImagesUseCase(get()) }
     

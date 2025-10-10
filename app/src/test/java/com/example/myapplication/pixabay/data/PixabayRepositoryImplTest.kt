@@ -11,12 +11,12 @@ import org.junit.Test
 class PixabayRepositoryImplTest {
 
     private lateinit var pixabayApi: PixabayApi
-    private lateinit var repository: PixabayRepositoryImpl
+    private lateinit var repository: PixabaySearchRepositoryImpl
 
     @Before
     fun setup() {
         pixabayApi = mockk()
-        repository = PixabayRepositoryImpl(pixabayApi)
+        repository = PixabaySearchRepositoryImpl(pixabayApi)
     }
 
     @Test

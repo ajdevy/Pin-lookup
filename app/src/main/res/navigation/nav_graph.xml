@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashScreenFragment">
@@ -24,17 +25,33 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.login.ui.LoginFragment"
         android:label="Login">
+
         <action
             android:id="@+id/action_login_to_image_search"
             app:destination="@id/imageSearchFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
         android:id="@+id/imageSearchFragment"
         android:name="com.example.myapplication.imagesearch.ui.ImageSearchFragment"
-        android:label="Image Search" />
+        android:label="Image Search" >
+        <action
+            android:id="@+id/action_imageSearch_to_imageDetails"
+            app:destination="@id/imageDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageDetailsFragment"
+        android:name="com.example.myapplication.imagedetails.ui.ImageDetailsFragment"
+        android:label="Image Details">
+
+        <argument
+            android:name="imageId"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
 

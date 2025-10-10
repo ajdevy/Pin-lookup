@@ -3,9 +3,9 @@ package com.example.myapplication.pixabay.data
 import com.example.myapplication.pixabay.domain.PixabayImage
 import com.example.myapplication.pixabay.domain.PixabaySearchPage
 
-class PixabayRepositoryImpl(
+class PixabaySearchRepositoryImpl(
     private val api: PixabayApi
-) : PixabayRepository {
+) : PixabaySearchRepository {
 
     override suspend fun search(query: String, page: Int, perPage: Int): PixabaySearchPage {
         val response = api.searchImages(query = query, page = page, perPage = perPage)

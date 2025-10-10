@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
+
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
@@ -62,7 +65,17 @@ dependencies {
     implementation("androidx.room:room-runtime:2.7.0")
     implementation("androidx.room:room-ktx:2.7.0")
     implementation("androidx.room:room-paging:2.7.0")
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     kapt("androidx.room:room-compiler:2.7.0")
+
+    // Decompose core
+    implementation(libs.decompose)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+
+    // Compose in Fragment
+    implementation("androidx.fragment:fragment-compose:1.8.9")
 
     // Networking
     implementation(libs.retrofit)
@@ -91,6 +104,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
 
 }
