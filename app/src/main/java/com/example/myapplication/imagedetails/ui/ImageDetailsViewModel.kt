@@ -3,7 +3,9 @@ package com.example.myapplication.imagedetails.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.app.ui.UiState
+import com.example.myapplication.imagedetails.domain.GetPixabayImageUseCase
 import com.example.myapplication.pixabay.data.PixabayImageEntity
+import com.example.myapplication.pixabay.domain.PixabayImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,14 +15,18 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 
-class ImageDetailsViewModel : ViewModel() {
-    val currentImage: Flow<UiState<PixabayImageEntity>> = flow {
+class ImageDetailsViewModel(private val imageUseCase: GetPixabayImageUseCase) : ViewModel() {
+    val currentImage: StateFlow<UiState<PixabayImage>> = flow {
         emit(
-reposi
+            imageUseCase.invoke(id = 1L)
+                ?.let {
+                    UiState.Success(it)
+                }
+                ?: UiState.Error("Image not found")
         )
     }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        UiState.Loading
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = UiState.Loading
     )
 }

@@ -3,6 +3,7 @@ package com.example.myapplication.app.di
 import com.arkivanov.decompose.ComponentContext
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.app.ui.navigation.DefaultNavigationComponent
+import com.example.myapplication.imagedetails.di.imageDetailsModule
 import com.example.myapplication.pixabay.data.PixabayApi
 import com.example.myapplication.pixabay.data.PixabaySearchRepository
 import com.example.myapplication.pixabay.data.PixabaySearchRepositoryImpl
@@ -22,6 +23,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val appModule = module {
+
+    includes(
+        imageDetailsModule,
+    )
 
     // navigation
     factory { (componentContext: ComponentContext) ->
