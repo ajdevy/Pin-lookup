@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 class ImageDetailsFragment : Fragment() {
 
-    private val imageId: String by lazy {
-        arguments?.getString("imageId") ?: throw IllegalArgumentException("imageId is required")
+    private val imageId: Long by lazy {
+        arguments?.getLong("imageId") ?: throw IllegalArgumentException("imageId is required")
     }
 
     override fun onCreateView(
@@ -21,7 +22,7 @@ class ImageDetailsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MaterialTheme {
-                    val viewModel: ImageDetailsViewModel = koinViewModel()
+                    val viewModel: ImageDetailsViewModel = koinViewModel { parametersOf(imageId) }
                     PlantDetailDescription(viewModel)
                 }
             }

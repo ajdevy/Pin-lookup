@@ -15,10 +15,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 
-class ImageDetailsViewModel(private val imageUseCase: GetPixabayImageUseCase) : ViewModel() {
+class ImageDetailsViewModel(
+    private val imageId: Long,
+    private val imageUseCase: GetPixabayImageUseCase,
+) : ViewModel() {
     val currentImage: StateFlow<UiState<PixabayImage>> = flow {
         emit(
-            imageUseCase.invoke(id = 1L)
+            imageUseCase.invoke(id = imageId)
                 ?.let {
                     UiState.Success(it)
                 }

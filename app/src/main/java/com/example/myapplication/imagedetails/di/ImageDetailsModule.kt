@@ -16,6 +16,6 @@ val imageDetailsModule = module {
 
     factory { GetPixabayImageUseCase(get()) }
 
-    viewModel { ImageDetailsViewModel(get()) }
+    viewModel { (imageId: Long) -> ImageDetailsViewModel(imageId, get()) }
 
 }
