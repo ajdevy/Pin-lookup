@@ -20,9 +20,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "PIXABAY_BASE_URL", "\"https://pixabay.com/\"")
-        buildConfigField("String", "PIXABAY_API_KEY", "\"52172770-02e9fa286b610e88b1cbc92ed\"")
     }
 
     buildTypes {
@@ -40,7 +37,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
         viewBinding = true
     }
 }
@@ -68,20 +64,20 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
-    implementation("androidx.room:room-runtime:2.7.0")
-    implementation("androidx.room:room-ktx:2.7.0")
-    implementation("androidx.room:room-paging:2.7.0")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    kapt("androidx.room:room-compiler:2.7.0")
+    kapt(libs.androidx.room.compiler)
 
     // Decompose core
     implementation(libs.decompose)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation(libs.kotlinx.serialization.json)
 
     // Compose in Fragment
-    implementation("androidx.fragment:fragment-compose:1.8.9")
+    implementation(libs.androidx.fragment.compose)
 
     // Networking
     implementation(libs.retrofit)
@@ -92,7 +88,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
     
     // Image Loading
-    implementation("io.coil-kt:coil:2.6.0")
+    implementation(libs.coil)
     
     // Logging
     implementation(libs.timber)

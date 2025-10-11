@@ -28,32 +28,6 @@ val appModule = module {
         DefaultNavigationComponent(componentContext)
     }
 
-    single {
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
-
-    // Pixabay
-    single {
-        val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
-        }
-        val apiKeyInterceptor = Interceptor { chain ->
-            val original = chain.request()
-            val originalUrl = original.url
-            val newUrl = originalUrl.newBuilder()
-                .addQueryParameter("key", BuildConfig.PIXABAY_API_KEY)
-                .build()
-            val request = original.newBuilder().url(newUrl).build()
-            chain.proceed(request)
-        }
-        OkHttpClient.Builder()
-            .addInterceptor(apiKeyInterceptor)
-            .addInterceptor(logging)
-            .build()
-    }
-
     // ViewModels
     viewModel { ImageSearchViewModel(get(), get()) }
 }

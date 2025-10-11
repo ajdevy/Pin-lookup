@@ -1,4 +1,4 @@
-package com.example.myapplication.app.ui.util
+package com.example.myapplication.app.ui.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -38,5 +38,3 @@ class Navigator private constructor(private val fragment: Fragment) {
         fun from(fragment: Fragment): Navigator = Navigator(fragment)
     }
 }
-
-
