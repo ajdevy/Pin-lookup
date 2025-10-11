@@ -10,6 +10,7 @@ import com.example.myapplication.pixabay.data.PixabaySearchRepositoryImpl
 import com.example.myapplication.pixabay.domain.SearchImagesUseCase
 import com.example.myapplication.imagesearch.ui.ImageSearchViewModel
 import com.example.myapplication.pixabay.data.PixabayDatabase
+import com.example.myapplication.tasks.di.tasksModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import com.squareup.moshi.Moshi
@@ -26,6 +27,7 @@ val appModule = module {
 
     includes(
         imageDetailsModule,
+        tasksModule
     )
 
     // navigation
@@ -69,12 +71,12 @@ val appModule = module {
     }
 
     single { PixabaySearchRepositoryImpl(get()) } bind PixabaySearchRepository::class
-    
+
     single { SearchImagesUseCase(get()) }
-    
+
     // Database
     single { PixabayDatabase.create(androidContext()) }
-    
+
     // ViewModels
     viewModel { ImageSearchViewModel(get(), get()) }
 }
