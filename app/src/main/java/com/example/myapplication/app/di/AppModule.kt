@@ -4,30 +4,23 @@ import com.arkivanov.decompose.ComponentContext
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.app.ui.navigation.DefaultNavigationComponent
 import com.example.myapplication.imagedetails.di.imageDetailsModule
-import com.example.myapplication.pixabay.data.PixabayApi
-import com.example.myapplication.pixabay.data.PixabaySearchRepository
-import com.example.myapplication.pixabay.data.PixabaySearchRepositoryImpl
-import com.example.myapplication.pixabay.domain.SearchImagesUseCase
+import com.example.myapplication.imagesearch.di.imageSearchModule
 import com.example.myapplication.imagesearch.ui.ImageSearchViewModel
-import com.example.myapplication.pixabay.data.PixabayDatabase
 import com.example.myapplication.tasks.di.tasksModule
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.bind
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 val appModule = module {
 
     includes(
         imageDetailsModule,
-        tasksModule
+        tasksModule,
+        imageSearchModule
     )
 
     // navigation
@@ -60,22 +53,6 @@ val appModule = module {
             .addInterceptor(logging)
             .build()
     }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.PIXABAY_BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(get()))
-            .client(get())
-            .build()
-            .create(PixabayApi::class.java)
-    }
-
-    single { PixabaySearchRepositoryImpl(get()) } bind PixabaySearchRepository::class
-
-    single { SearchImagesUseCase(get()) }
-
-    // Database
-    single { PixabayDatabase.create(androidContext()) }
 
     // ViewModels
     viewModel { ImageSearchViewModel(get(), get()) }

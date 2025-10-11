@@ -23,3 +23,5 @@ dependencyResolutionManagement {
 rootProject.name = "My Application"
 include(":app")
 include(":tasks")
+include(":images")
+include(":common")
