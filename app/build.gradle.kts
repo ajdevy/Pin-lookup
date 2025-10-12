@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.flexsentlabs.myapplication"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.flexsentlabs.myapplication"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

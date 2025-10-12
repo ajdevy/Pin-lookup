@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication.common"
+    namespace = "com.flexsentlabs.myapplication.common"
     compileSdk = 36
 
     defaultConfig {

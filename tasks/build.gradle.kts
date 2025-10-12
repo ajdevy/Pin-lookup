@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication.tasks"
+    namespace = "com.flexsentlabs.myapplication.tasks"
     compileSdk = 36
 
     defaultConfig {

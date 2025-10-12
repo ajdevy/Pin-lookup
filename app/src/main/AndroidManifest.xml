@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name="com.example.myapplication.tasks.ui.TasksActivity"
+            android:name="com.flexsentlabs.myapplication.tasks.ui.TasksActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">
             <intent-filter>

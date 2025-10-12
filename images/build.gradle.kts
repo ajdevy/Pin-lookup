@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication.imagesearch"
+    namespace = "com.flexsentlabs.myapplication.imagesearch"
     compileSdk = 36
 
     buildFeatures {

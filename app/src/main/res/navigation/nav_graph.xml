@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.myapplication.app.ui.splash.SplashScreenFragment"
+        android:name="com.flexsentlabs.myapplication.app.ui.splash.SplashScreenFragment"
         android:label="Splash">
         <action
             android:id="@+id/action_splash_to_login"
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.myapplication.login.ui.LoginFragment"
+        android:name="com.flexsentlabs.myapplication.login.ui.LoginFragment"
         android:label="Login">
 
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/imageSearchFragment"
-        android:name="com.example.myapplication.imagesearch.ui.ImageSearchFragment"
+        android:name="com.flexsentlabs.myapplication.imagesearch.ui.ImageSearchFragment"
         android:label="Image Search" >
         <action
             android:id="@+id/action_imageSearch_to_imageDetails"
@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/imageDetailsFragment"
-        android:name="com.example.myapplication.imagedetails.ui.ImageDetailsFragment"
+        android:name="com.flexsentlabs.myapplication.imagedetails.ui.ImageDetailsFragment"
         android:label="Image Details">
 
         <argument
