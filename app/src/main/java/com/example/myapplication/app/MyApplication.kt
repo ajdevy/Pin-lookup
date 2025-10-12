@@ -1,8 +1,8 @@
 package com.example.myapplication.app
 
 import android.app.Application
-import com.example.myapplication.BuildConfig
 import com.example.myapplication.app.di.appModule
+import com.example.myapplication.imagesearch.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
