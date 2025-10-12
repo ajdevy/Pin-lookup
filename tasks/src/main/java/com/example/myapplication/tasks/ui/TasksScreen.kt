@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -87,7 +88,14 @@ fun TasksList(
     onDraftChanged: (TaskDraft) -> Unit = { _ -> },
     onDraftCreated: (TaskDraft) -> Unit = { _ -> },
 ) {
+    val lazyListState = rememberLazyListState()
+    LaunchedEffect(newTaskDraft) {
+        if (newTaskDraft != null) {
+            lazyListState.animateScrollToItem(0)
+        }
+    }
     LazyColumn(
+        state = lazyListState,
         modifier = Modifier.padding(16.dp)
     ) {
         if (newTaskDraft != null) {
@@ -134,6 +142,7 @@ fun TaskDraftItem(
             modifier = Modifier
                 .weight(1f)
                 .focusRequester(focusRequester),
+            maxLines = 1,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
