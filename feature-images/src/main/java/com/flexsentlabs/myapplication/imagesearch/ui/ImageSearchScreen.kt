@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-// import androidx.paging.compose.itemKey
+import androidx.paging.compose.itemKey
 // import coil.compose.AsyncImage
 import com.flexsentlabs.myapplication.domain.images.models.PixabayImage
 import kotlinx.coroutines.delay
@@ -55,14 +55,23 @@ fun ImageSearchScreen(
     modifier: Modifier = Modifier,
     viewModel: ImageSearchViewModel
 ) {
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by remember { mutableStateOf("nature") } // Default search for testing
     var isSearchBarExpanded by remember { mutableStateOf(false) }
     val pagingItems = viewModel.pagingData.collectAsLazyPagingItems()
 
     // Debounced search effect
     LaunchedEffect(searchQuery) {
         delay(500) // 500ms debounce
-        viewModel.searchImages(searchQuery)
+        if (searchQuery.isNotBlank()) {
+            viewModel.searchImages(searchQuery)
+        }
+    }
+    
+    // Trigger initial search
+    LaunchedEffect(Unit) {
+        val query = "nature"
+        android.util.Log.d("ImageSearchScreen", "Triggering initial search with query: '$query'")
+        viewModel.searchImages(query)
     }
 
     Surface {
@@ -121,15 +130,66 @@ fun ImageList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<PixabayImage>
 ) {
+    // Debug information
+    val loadState = pagingItems.loadState
+    val itemCount = pagingItems.itemCount
+    
+    // Debug logging
+    android.util.Log.d("ImageSearchScreen", "Item count: $itemCount, Load state: $loadState")
+    
+    // Show initial loading state
+    if (loadState.refresh is LoadState.Loading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+    
+    // Show error state for initial load
+    if (loadState.refresh is LoadState.Error) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Error loading images: ${(loadState.refresh as LoadState.Error).error.message}",
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        return
+    }
+    
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        if (itemCount == 0 && loadState.refresh is LoadState.NotLoading) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No images found. Try searching for something else.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+        
         items(
             count = pagingItems.itemCount,
-            key = { index -> pagingItems[index]?.id ?: index }
+            key = pagingItems.itemKey { it.id }
         ) { index ->
             val item = pagingItems[index]
+            android.util.Log.d("ImageSearchScreen", "Item at index $index: $item")
             item?.let { image ->
                 ImageItem(
                     image = image,

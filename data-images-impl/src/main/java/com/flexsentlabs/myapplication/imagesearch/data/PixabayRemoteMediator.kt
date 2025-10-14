@@ -33,6 +33,7 @@ class PixabayRemoteMediator(
         state: PagingState<Int, PixabayImage>
     ): MediatorResult {
         Timber.Forest.d("Loading data for query: $query, loadType: $loadType")
+        Timber.d("RemoteMediator load called for query: $query, loadType: $loadType")
         return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> {
@@ -77,14 +78,14 @@ class PixabayRemoteMediator(
                     remoteKeysDao.clearRemoteKeys()
                 }
 
-                imageDao.insertAll(
-                    images.map {
-                        it.toEntity(
-                            searchQuery = query,
-                            page = page
-                        )
-                    }
-                )
+                val entities = images.map {
+                    it.toEntity(
+                        searchQuery = query,
+                        page = page
+                    )
+                }
+                Timber.Forest.d("Saving ${entities.size} entities with searchQuery: '$query'")
+                imageDao.insertAll(entities)
                 remoteKeysDao.insertAll(
                     listOf(
                         ImageRemoteKeys(
@@ -95,6 +96,12 @@ class PixabayRemoteMediator(
                     )
                 )
                 Timber.Forest.d("Successfully saved ${images.size} images to database")
+                
+                // Debug: Check what's actually in the database
+                val count = imageDao.getCountForQuery(query)
+                val allQueries = imageDao.getAllSearchQueries()
+                Timber.Forest.d("Database now has $count images for query '$query'")
+                Timber.Forest.d("All search queries in database: $allQueries")
             }
 
             val endOfPagination = result.images.isEmpty()

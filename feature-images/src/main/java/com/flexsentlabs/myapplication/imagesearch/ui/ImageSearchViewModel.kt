@@ -37,13 +37,20 @@ class ImageSearchViewModel(
                 flowOf(PagingData.empty())
             } else {
                 Timber.d("Getting pager for query: '$query'")
-                val pager = get<Pager<Int, PixabayImage>> { parametersOf(query) }
-                pager.flow.cachedIn(viewModelScope)
+                try {
+                    val pager = get<Pager<Int, PixabayImage>> { parametersOf(query) }
+                    Timber.d("Pager created successfully for query: '$query'")
+                    pager.flow.cachedIn(viewModelScope)
+                } catch (e: Exception) {
+                    Timber.e(e, "Error creating pager for query: '$query'")
+                    flowOf(PagingData.empty())
+                }
             }
         }
 
     fun searchImages(query: String) {
-        Timber.d("searchImages called with query: '$query'")
+        Timber.d("searchImages called with query: '$query' (length: ${query.length})")
         _searchQuery.value = query
+        Timber.d("Search query updated to: '${_searchQuery.value}' (length: ${_searchQuery.value.length})")
     }
 }

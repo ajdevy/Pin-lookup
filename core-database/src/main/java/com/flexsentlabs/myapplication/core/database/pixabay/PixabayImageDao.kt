@@ -10,6 +10,12 @@ import androidx.room.Query
 interface PixabayImageDao {
     @Query("SELECT * FROM pixabay_images WHERE searchQuery = :query ORDER BY page ASC, id ASC")
     fun pagingSource(query: String): PagingSource<Int, PixabayImageEntity>
+    
+    @Query("SELECT COUNT(*) FROM pixabay_images WHERE searchQuery = :query")
+    suspend fun getCountForQuery(query: String): Int
+    
+    @Query("SELECT DISTINCT searchQuery FROM pixabay_images")
+    suspend fun getAllSearchQueries(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(images: List<PixabayImageEntity>)

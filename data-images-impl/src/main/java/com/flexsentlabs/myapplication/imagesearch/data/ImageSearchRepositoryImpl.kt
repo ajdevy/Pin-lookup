@@ -10,8 +10,10 @@ class ImageSearchRepositoryImpl(
 ) : ImageSearchRepository {
 
     override suspend fun search(query: String, page: Int, perPage: Int): PixabaySearchPage {
+        timber.log.Timber.d("ImageSearchRepositoryImpl.search called with query: $query, page: $page, perPage: $perPage")
         val response = pixabayApi.searchImages(query, page, perPage)
-        return PixabaySearchPage(
+        timber.log.Timber.d("API response received: total=${response.total}, totalHits=${response.totalHits}, hits=${response.hits.size}")
+        val result = PixabaySearchPage(
             total = response.total,
             totalHits = response.totalHits,
             images = response.hits.map { hit ->
@@ -25,5 +27,7 @@ class ImageSearchRepositoryImpl(
                 )
             }
         )
+        timber.log.Timber.d("Repository returning ${result.images.size} images")
+        return result
     }
 }
