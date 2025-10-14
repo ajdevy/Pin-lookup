@@ -12,7 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flexsentlabs.myapplication.imagesearch.databinding.FragmentImageSearchBinding
-import com.flexsentlabs.myapplication.pixabay.data.PixabayImageEntity
+import com.flexsentlabs.myapplication.database.pixabay.PixabayImageEntity
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

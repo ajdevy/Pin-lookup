@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":tasks"))
     implementation(project(":images"))
     implementation(project(":common"))
+    implementation(project(":database"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

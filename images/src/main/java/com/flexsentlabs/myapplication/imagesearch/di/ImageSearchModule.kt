@@ -1,10 +1,10 @@
 package com.flexsentlabs.myapplication.imagesearch.di
 
 import com.flexsentlabs.myapplication.imagesearch.BuildConfig
-import com.flexsentlabs.myapplication.pixabay.data.PixabayApi
-import com.flexsentlabs.myapplication.pixabay.data.PixabayDatabase
-import com.flexsentlabs.myapplication.pixabay.data.PixabaySearchRepository
-import com.flexsentlabs.myapplication.pixabay.data.PixabaySearchRepositoryImpl
+import com.flexsentlabs.myapplication.database.pixabay.PixabayApi
+import com.flexsentlabs.myapplication.database.pixabay.PixabayDatabase
+import com.flexsentlabs.myapplication.database.pixabay.PixabaySearchRepository
+import com.flexsentlabs.myapplication.database.pixabay.PixabaySearchRepositoryImpl
 import com.flexsentlabs.myapplication.pixabay.domain.SearchImagesUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

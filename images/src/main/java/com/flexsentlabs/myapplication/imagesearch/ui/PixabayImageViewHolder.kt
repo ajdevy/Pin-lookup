@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.flexsentlabs.myapplication.imagesearch.R
-import com.flexsentlabs.myapplication.pixabay.data.PixabayImageEntity
+import com.flexsentlabs.myapplication.database.pixabay.PixabayImageEntity
 import timber.log.Timber
 
 class PixabayImageViewHolder(itemView: View, val itemClickListener: ItemClickListener) : RecyclerView.ViewHolder(itemView) {

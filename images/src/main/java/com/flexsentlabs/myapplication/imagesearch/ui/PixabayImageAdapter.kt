@@ -7,7 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.flexsentlabs.myapplication.imagesearch.R
-import com.flexsentlabs.myapplication.pixabay.data.PixabayImageEntity
+import com.flexsentlabs.myapplication.database.pixabay.PixabayImageEntity
 
 class PixabayImageAdapter(val itemClickListener: ItemClickListener) :
     PagingDataAdapter<PixabayImageEntity, PixabayImageViewHolder>(

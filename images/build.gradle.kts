@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":database"))
     
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -62,13 +63,9 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
-    implementation("androidx.room:room-runtime:2.7.0")
-    implementation("androidx.room:room-ktx:2.7.0")
-    implementation("androidx.room:room-paging:2.7.0")
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    kapt("androidx.room:room-compiler:2.7.0")
     
     // Decompose core
     implementation(libs.decompose)

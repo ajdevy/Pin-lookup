@@ -1,6 +1,6 @@
 package com.flexsentlabs.myapplication.pixabay.domain
 
-import com.flexsentlabs.myapplication.pixabay.data.PixabaySearchRepository
+import com.flexsentlabs.myapplication.database.pixabay.PixabaySearchRepository
 
 class SearchImagesUseCase(
     private val repository: PixabaySearchRepository

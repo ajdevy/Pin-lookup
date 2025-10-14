@@ -4,7 +4,7 @@ import com.flexsentlabs.myapplication.imagedetails.data.PixabayImageRepository
 import com.flexsentlabs.myapplication.imagedetails.data.PixabayImageRepositoryImpl
 import com.flexsentlabs.myapplication.imagedetails.domain.GetPixabayImageUseCase
 import com.flexsentlabs.myapplication.imagedetails.ui.ImageDetailsViewModel
-import com.flexsentlabs.myapplication.pixabay.data.PixabayDatabase
+import com.flexsentlabs.myapplication.database.pixabay.PixabayDatabase
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 

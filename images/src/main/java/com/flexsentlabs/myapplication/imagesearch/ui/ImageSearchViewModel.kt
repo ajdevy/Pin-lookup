@@ -7,9 +7,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.flexsentlabs.myapplication.pixabay.data.PixabayDatabase
-import com.flexsentlabs.myapplication.pixabay.data.PixabayImageEntity
-import com.flexsentlabs.myapplication.pixabay.data.PixabayRemoteMediator
+import com.flexsentlabs.myapplication.database.pixabay.PixabayDatabase
+import com.flexsentlabs.myapplication.database.pixabay.PixabayImageEntity
+import com.flexsentlabs.myapplication.database.pixabay.PixabayRemoteMediator
 import com.flexsentlabs.myapplication.pixabay.domain.SearchImagesUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.flexsentlabs.myapplication.pixabay.data
+package com.flexsentlabs.myapplication.database.pixabay
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
