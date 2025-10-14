@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flexsentlabs.myapplication.R
 import com.flexsentlabs.myapplication.app.ui.theme.MyApplicationTheme
 import com.flexsentlabs.myapplication.imagesearch.ui.ImageSearchScreen
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             MyApplicationTheme {
-                ImageSearchScreen()
+                ImageSearchScreen(viewModel = koinViewModel())
             }
         }
     }

@@ -23,21 +23,53 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isDebuggable = true
+            // Disable unused resources in debug builds
+            isDefault = true
+        }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        // Enable incremental compilation
+        isCoreLibraryDesugaringEnabled = false
     }
+    
     kotlinOptions {
         jvmTarget = "11"
+        // Enable incremental compilation
+        freeCompilerArgs += listOf(
+            "-Xjvm-default=all",
+            "-Xopt-in=kotlin.RequiresOptIn"
+        )
     }
+    
     buildFeatures {
         compose = true
         viewBinding = true
+        // Disable unused features for faster builds
+        buildConfig = false
+        aidl = false
+        renderScript = false
+        resValues = false
+        shaders = false
+    }
+    
+    // Enable incremental annotation processing
+    kapt {
+        useBuildCache = true
+        mapDiagnosticLocations = true
     }
 }
 
@@ -97,6 +129,9 @@ dependencies {
     
     // Logging
     implementation(libs.timber)
+    
+    // Compose Runtime Tracing
+    implementation("androidx.compose.runtime:runtime-tracing:1.9.3")
 
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.8.0")

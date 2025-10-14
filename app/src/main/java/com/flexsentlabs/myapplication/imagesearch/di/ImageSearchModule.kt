@@ -4,12 +4,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.flexsentlabs.myapplication.core.database.AppDatabase
-import com.flexsentlabs.myapplication.data.images.PixabayApi
 import com.flexsentlabs.myapplication.imagesearch.domain.ImageSearchRepository
 import com.flexsentlabs.myapplication.imagesearch.domain.SearchImagesUseCase
 import com.flexsentlabs.myapplication.imagesearch.BuildConfig
 import com.flexsentlabs.myapplication.imagesearch.data.ImageSearchRepositoryImpl
 import com.flexsentlabs.myapplication.imagesearch.data.PixabayRemoteMediator
+import com.flexsentlabs.myapplication.imagesearch.data.api.PixabayApi
+import com.flexsentlabs.myapplication.imagesearch.ui.ImageSearchViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -46,6 +47,10 @@ val imageSearchModule = module {
         )
     }
 
+    single { SearchImagesUseCase(get()) }
+
+    single { ImageSearchViewModel(get()) }
+
     single {
         Retrofit.Builder()
             .baseUrl(BuildConfig.PIXABAY_BASE_URL)
@@ -55,7 +60,7 @@ val imageSearchModule = module {
             .create(PixabayApi::class.java)
     }
 
-    single { ImageSearchRepositoryImpl(get()) }
+    single<ImageSearchRepository> { ImageSearchRepositoryImpl(get()) }
 
     single { SearchImagesUseCase(get<ImageSearchRepository>()) }
 
