@@ -1,11 +1,10 @@
 plugins {
     id("com.android.library")
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
-
 android {
-    namespace = "com.flexsentlabs.myapplication.tasks"
+    namespace = "com.flexsentlabs.myapplication.core.database"
     compileSdk = 36
 
     defaultConfig {
@@ -18,7 +17,7 @@ android {
             isMinifyEnabled = false
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -27,28 +26,20 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
     implementation(project(":core-common"))
-    
+
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.foundation)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.paging.runtime)
     implementation(libs.koin)
-    implementation(libs.koin.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation("androidx.fragment:fragment-compose:1.8.9")
+    implementation(libs.timber)
+    
+    kapt(libs.androidx.room.compiler)
     
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.8.0")
@@ -56,5 +47,4 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("io.mockk:mockk:1.13.8")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    debugImplementation(libs.androidx.compose.ui.tooling)
 }

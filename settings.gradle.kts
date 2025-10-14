@@ -23,6 +23,10 @@ dependencyResolutionManagement {
 rootProject.name = "My Application"
 include(":app")
 include(":tasks")
-include(":images")
-include(":common")
-include(":database")
+include(":feature-images")
+include(":domain-images")
+include(":domain-images-models")
+include(":core-common")
+include(":core-database")
+include(":data-images")
+include(":data-images-impl")

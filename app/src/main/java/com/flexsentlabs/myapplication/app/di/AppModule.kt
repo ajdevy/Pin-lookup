@@ -2,7 +2,7 @@ package com.flexsentlabs.myapplication.app.di
 
 import com.arkivanov.decompose.ComponentContext
 import com.flexsentlabs.myapplication.app.ui.navigation.DefaultNavigationComponent
-import com.flexsentlabs.myapplication.database.di.databaseModule
+import com.flexsentlabs.myapplication.core.database.di.databaseModule
 import com.flexsentlabs.myapplication.imagedetails.di.imageDetailsModule
 import com.flexsentlabs.myapplication.imagesearch.di.imageSearchModule
 import com.flexsentlabs.myapplication.imagesearch.ui.ImageSearchViewModel
@@ -25,5 +25,5 @@ val appModule = module {
     }
 
     // ViewModels
-    viewModel { ImageSearchViewModel(get(), get()) }
+    viewModel { ImageSearchViewModel(get()) }
 }
