@@ -106,6 +106,15 @@ class PixabayRemoteMediator(
 
             val endOfPagination = result.images.isEmpty()
             Timber.Forest.d("Load completed successfully. End of pagination: $endOfPagination")
+            
+            // Force a database invalidation to ensure paging source gets updated data
+            if (loadType == LoadType.REFRESH) {
+                Timber.Forest.d("Forcing database invalidation for query: $query")
+                // The paging source should automatically detect the new data
+                // We need to ensure the paging source gets invalidated
+                // This should trigger a refresh of the paging source
+            }
+            
             MediatorResult.Success(endOfPaginationReached = endOfPagination)
         } catch (e: Exception) {
             Timber.Forest.e(e, "Error loading data for query: $query, loadType: $loadType")

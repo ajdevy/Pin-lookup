@@ -39,16 +39,17 @@ class ImageSearchViewModel(
             Timber.d("Search query changed in pagingData: '$query' (length: ${query.length})")
             if (query.isBlank()) {
                 Timber.d("Empty query, returning empty paging data")
-                flowOf(PagingData.empty())
+                // Force a new empty PagingData to ensure UI updates
+                flowOf(PagingData.empty<PixabayImage>())
             } else {
                 Timber.d("Getting pager for query: '$query'")
                 try {
                     val pager = get<Pager<Int, PixabayImage>> { parametersOf(query) }
                     Timber.d("Pager created successfully for query: '$query'")
-                    pager.flow.cachedIn(viewModelScope)
+                    pager.flow
                 } catch (e: Exception) {
                     Timber.e(e, "Error creating pager for query: '$query'")
-                    flowOf(PagingData.empty())
+                    flowOf(PagingData.empty<PixabayImage>())
                 }
             }
         }
@@ -57,6 +58,11 @@ class ImageSearchViewModel(
         Timber.d("searchImages called with query: '$query' (length: ${query.length})")
         _searchQuery.value = query
         Timber.d("Search query updated to: '${_searchQuery.value}' (length: ${_searchQuery.value.length})")
+    }
+    
+    fun clearSearch() {
+        Timber.d("Clearing search results")
+        _searchQuery.value = ""
     }
     
     fun searchImagesDebounced(query: String, delayMs: Long = 500L) {
@@ -72,7 +78,8 @@ class ImageSearchViewModel(
                 Timber.d("Executing debounced search for query: '$query'")
                 searchImages(query)
             } else {
-                Timber.d("Query is blank, skipping debounced search")
+                Timber.d("Query is blank, clearing search results")
+                clearSearch() // Use explicit clear method
             }
         }
     }

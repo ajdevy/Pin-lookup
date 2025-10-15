@@ -58,9 +58,7 @@ fun ImageSearchScreen(
 
     // Debounced search effect
     LaunchedEffect(searchQuery) {
-        if (searchQuery.isNotBlank()) {
-            viewModel.searchImagesDebounced(searchQuery)
-        }
+        viewModel.searchImagesDebounced(searchQuery)
     }
 
     if (BuildConfig.DEBUG) {
@@ -181,7 +179,7 @@ fun ImageList(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        if (searchQuery.isEmpty() && itemCount == 0 && loadState.refresh is LoadState.NotLoading) {
+        if (searchQuery.isNotEmpty() && itemCount == 0 && loadState.refresh is LoadState.NotLoading) {
             item {
                 Box(
                     modifier = Modifier
