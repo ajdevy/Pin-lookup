@@ -47,7 +47,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 // import coil.compose.AsyncImage
 import com.flexsentlabs.myapplication.domain.images.models.PixabayImage
-import kotlinx.coroutines.delay
+import com.flexsentlabs.myapplication.imagesearch.BuildConfig
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,23 +56,22 @@ fun ImageSearchScreen(
     modifier: Modifier = Modifier,
     viewModel: ImageSearchViewModel
 ) {
-    var searchQuery by remember { mutableStateOf("nature") } // Default search for testing
+    var searchQuery by remember { mutableStateOf("") } // Start with empty query
     var isSearchBarExpanded by remember { mutableStateOf(false) }
     val pagingItems = viewModel.pagingData.collectAsLazyPagingItems()
 
     // Debounced search effect
     LaunchedEffect(searchQuery) {
-        delay(500) // 500ms debounce
         if (searchQuery.isNotBlank()) {
-            viewModel.searchImages(searchQuery)
+            viewModel.searchImagesDebounced(searchQuery)
         }
     }
-    
+
     // Trigger initial search
     LaunchedEffect(Unit) {
-        val query = "nature"
-        android.util.Log.d("ImageSearchScreen", "Triggering initial search with query: '$query'")
-        viewModel.searchImages(query)
+        val query = if (BuildConfig.DEBUG) "nature" else ""
+        Timber.d( "Triggering initial search with query: '$query'")
+        searchQuery = query // Update the UI state first
     }
 
     Surface {
@@ -133,10 +133,10 @@ fun ImageList(
     // Debug information
     val loadState = pagingItems.loadState
     val itemCount = pagingItems.itemCount
-    
+
     // Debug logging
-    android.util.Log.d("ImageSearchScreen", "Item count: $itemCount, Load state: $loadState")
-    
+    Timber.d("Item count: $itemCount, Load state: $loadState")
+
     // Show initial loading state
     if (loadState.refresh is LoadState.Loading) {
         Box(
@@ -147,7 +147,7 @@ fun ImageList(
         }
         return
     }
-    
+
     // Show error state for initial load
     if (loadState.refresh is LoadState.Error) {
         Box(
@@ -162,7 +162,7 @@ fun ImageList(
         }
         return
     }
-    
+
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -183,13 +183,13 @@ fun ImageList(
                 }
             }
         }
-        
+
         items(
             count = pagingItems.itemCount,
             key = pagingItems.itemKey { it.id }
         ) { index ->
             val item = pagingItems[index]
-            android.util.Log.d("ImageSearchScreen", "Item at index $index: $item")
+            Timber.d("Item at index $index: $item")
             item?.let { image ->
                 ImageItem(
                     image = image,
@@ -212,6 +212,7 @@ fun ImageList(
                     }
                 }
             }
+
             is LoadState.Error -> {
                 item {
                     Text(
@@ -221,6 +222,7 @@ fun ImageList(
                     )
                 }
             }
+
             else -> {}
         }
     }
@@ -254,9 +256,9 @@ fun ImageItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // User info and tags
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -272,7 +274,7 @@ fun ImageItem(
                     modifier = Modifier.weight(1f)
                 )
             }
-            
+
             // Tags
             if (image.tags.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(4.dp))

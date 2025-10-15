@@ -6,6 +6,7 @@ import com.flexsentlabs.myapplication.imagesearch.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
+import android.util.Log
 
 class MyApplication : Application() {
     override fun onCreate() {
@@ -31,12 +32,12 @@ class MyApplication : Application() {
 class ReleaseTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         // Only log errors and warnings in release builds
-        if (priority == android.util.Log.ERROR || priority == android.util.Log.WARN) {
+        if (priority == Log.ERROR || priority == Log.WARN) {
             // You could send logs to a crash reporting service here
             // For now, we'll just use the default Android logging
             when (priority) {
-                android.util.Log.ERROR -> android.util.Log.e(tag, message, t)
-                android.util.Log.WARN -> android.util.Log.w(tag, message, t)
+                Log.ERROR -> Log.e(tag, message, t)
+                Log.WARN -> Log.w(tag, message, t)
             }
         }
     }

@@ -26,6 +26,9 @@ interface PixabayImageDao {
     @Query("SELECT * FROM pixabay_images WHERE id = :id")
     suspend fun findById(id: Long): PixabayImageEntity?
 
+    @Query("SELECT * FROM pixabay_images")
+    suspend fun getAllImages(): List<PixabayImageEntity>
+
     @Query("DELETE FROM pixabay_images")
     suspend fun clearAll()
 }

@@ -16,6 +16,9 @@ class DomainPagingSource(
         return when (val result = entityPagingSource.load(params)) {
             is LoadResult.Page -> {
                 Timber.d("DomainPagingSource received ${result.data.size} entities from database")
+                if (result.data.isNotEmpty()) {
+                    Timber.d("First entity searchQuery: '${result.data.first().searchQuery}'")
+                }
                 val domainData = result.data.map { it.toDomain() }
                 Timber.d("DomainPagingSource converted to ${domainData.size} domain objects")
                 LoadResult.Page(
@@ -26,11 +29,11 @@ class DomainPagingSource(
             }
             is LoadResult.Error -> {
                 Timber.e("DomainPagingSource error: ${result.throwable}")
-                result as LoadResult<Int, PixabayImage>
+                LoadResult.Error(result.throwable)
             }
             is LoadResult.Invalid -> {
                 Timber.w("DomainPagingSource invalid result")
-                result as LoadResult<Int, PixabayImage>
+                LoadResult.Invalid()
             }
         }
     }

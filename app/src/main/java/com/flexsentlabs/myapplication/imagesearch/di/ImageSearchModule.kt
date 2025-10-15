@@ -42,7 +42,10 @@ val imageSearchModule = module {
             remoteMediator = get<PixabayRemoteMediator> { parametersOf(query) },
             pagingSourceFactory = {
                 Timber.d("Creating paging source for query: '$query'")
-                DomainPagingSource(get<AppDatabase>().pixabayImageDao().pagingSource(query))
+                val dao = get<AppDatabase>().pixabayImageDao()
+                val entityPagingSource = dao.pagingSource(query)
+                Timber.d("Entity paging source created for query: '$query'")
+                DomainPagingSource(entityPagingSource)
             }
         )
     }
